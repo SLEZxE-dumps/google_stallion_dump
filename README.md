@@ -1,0 +1,14 @@
+# generic_system_google-user 16 CP1A.260305.018 14887507 release-keys
+- manufacturer: google
+- platform: zumapro
+- codename: stallion
+- flavor: generic_system_google-user
+- release: 16
+- id: CP1A.260305.018
+- incremental: 14887507
+- tags: release-keys
+- fingerprint: google/stallion/stallion:16/CP1A.260305.018/14887507:user/release-keys
+- is_ab: true
+- brand: google
+- branch: generic_system_google-user-16-CP1A.260305.018-14887507-release-keys
+- repo: google_stallion_dump

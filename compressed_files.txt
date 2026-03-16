@@ -1,0 +1,9 @@
+product/priv-app/DevicePersonalizationAiAiPrebuiltPixel2025/DevicePersonalizationAiAiPrebuiltPixel2025.apk.zst
+product/priv-app/PrebuiltBugle/PrebuiltBugle.apk.zst
+product/priv-app/PixelCameraServicesConnectivityClient/PixelCameraServicesConnectivityClient.apk.zst
+product/priv-app/PrebuiltGmsCoreVic/PrebuiltGmsCoreVic.apk.zst
+vendor/apex/com.google.pixel.camera.hal.apex.zst
+product/app/Maps/Maps.apk.zst
+product/app/PrebuiltGmail/PrebuiltGmail.apk.zst
+product/app/Photos/Photos.apk.zst
+product/app/YouTube/YouTube.apk.zst
