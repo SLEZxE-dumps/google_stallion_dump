@@ -1,0 +1,84 @@
+#!/system/bin/sh
+#
+# Copyright 2024 Google LLC. All Rights Reserved.
+#
+# Stallion Calibration Sub-Script.
+#
+# Contains STA5-specific sensor information for sensor_cal.
+
+# Sensors supported for calibration.
+SUPPORTED_SENSORS="accel als baro gyro prox"
+NON_CAL_PHYSICAL_SENSORS="alsp_temp baro_temp imu_temp mag"
+
+#######################################
+# Converts a sensor name to its path.
+# Globals:
+#   CAL_PARAMS
+#   SENSOR
+#   SENSOR_NAME
+#   SENSOR_PATH
+# Arguments:
+#   None
+# Outputs:
+#   Saves the sensor path in SENSOR_PATH.
+#   Logging based on set VERBOSITY level.
+#######################################
+sensor_cal::sensor_to_path() {
+  if [[ "${SENSOR}" == "accel" ]]; then
+    SENSOR_PATH="/fac_cal/dev/icm45631/0/accel"
+    SENSOR_NAME="icm45631"
+    LIST_NAME="ICM45631 Accelerometer"
+    # Add parameters in addition to the original ones.
+    CAL_PARAMS+=" avg_odr_25"
+  elif [[ "${SENSOR}" == "als" ]]; then
+    SENSOR_PATH="/fac_cal/dev/tmd3743/0/als"
+    SENSOR_NAME="tmd3743"
+    LIST_NAME="TMD3743 Ambient Light"
+    CAL_PARAMS=" \
+      lux_scale x_scale z_scale vsync_delay_us \
+      clear_gain0_ratio clear_gain1_ratio clear_gain2_ratio clear_gain3_ratio \
+      clear_gain4_ratio clear_gain5_ratio clear_gain6_ratio clear_gain7_ratio \
+      red_gain0_ratio red_gain1_ratio red_gain2_ratio red_gain3_ratio \
+      red_gain4_ratio red_gain5_ratio red_gain6_ratio red_gain7_ratio \
+      green_gain0_ratio green_gain1_ratio green_gain2_ratio green_gain3_ratio \
+      green_gain4_ratio green_gain5_ratio green_gain6_ratio green_gain7_ratio \
+      blue_gain0_ratio blue_gain1_ratio blue_gain2_ratio blue_gain3_ratio \
+      blue_gain4_ratio blue_gain5_ratio blue_gain6_ratio blue_gain7_ratio \
+      wide_gain0_ratio wide_gain1_ratio wide_gain2_ratio wide_gain3_ratio \
+      wide_gain4_ratio wide_gain5_ratio wide_gain6_ratio wide_gain7_ratio \
+      lux_leakage_at_dbv xyz_leakage_at_dbv crgbw_leakage_at_dbv \
+      panel_serial panel_type"
+  elif [[ "${SENSOR}" == "baro" ]]; then
+    SENSOR_PATH="/fac_cal/dev/spl07003/0/baro"
+    SENSOR_NAME="spl07003"
+    LIST_NAME="SPL07003 Barometer"
+  elif [[ "${SENSOR}" == "gyro" ]]; then
+    SENSOR_PATH="/fac_cal/dev/icm45631/0/gyro"
+    SENSOR_NAME="icm45631"
+    LIST_NAME="ICM45631 Gyroscope"
+    # Add parameters in addition to the original ones.
+    CAL_PARAMS+=" avg_odr_25"
+  elif [[ "${SENSOR}" == "prox" ]]; then
+    SENSOR_PATH="/fac_cal/dev/tmd3743/0/prox"
+    SENSOR_NAME="tmd3743"
+    LIST_NAME="TMD3743 Proximity"
+    CAL_PARAMS="pdata_baseline pdata_scale temp_coeff"
+
+  ###############################
+  ## Non cal physical sensors. ##
+  ###############################
+  elif [[ "${SENSOR}" == "alsp_temp" ]]; then
+    LIST_NAME="TMD3743 Temperature"
+  elif [[ "${SENSOR}" == "baro_temp" ]]; then
+    LIST_NAME="SPL07003 Temperature"
+  elif [[ "${SENSOR}" == "imu_temp" ]]; then
+    LIST_NAME="ICM45631 Temperature"
+  elif [[ "${SENSOR}" == "mag" ]]; then
+    LIST_NAME="MMC5616 Magnetometer"
+  else
+    sensor_cal::ERROR "Unknown or unimplemented sensor: ${SENSOR}"
+    sensor_cal::exit_badparam
+  fi
+
+  sensor_cal::DEBUG "Registry path: ${SENSOR_PATH}"
+}

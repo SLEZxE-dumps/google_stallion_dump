@@ -1,0 +1,42 @@
+#
+# Stallion sensor device configuration registry script for EVT stage.
+#
+# Source of truth: go/pixel-sensor-list
+#
+
+#
+# CDT Filter <CDT>:<mask>
+# CDT format: <0xPPPPSJIV> (P:Product, S:Stage, J:Major, I:Minor, V:Variant)
+# go/pixel-cdt-zuma-pro
+#
+
+?+0x133000:0xFFFFF000 # EVT
+
+#
+# Record reg_script.
+#
+
++/
+reg_script=stallion_evt.reg
+
+#
+# Sensors
+#
+
+# IMU (ICM45631)
++/dev/icm45631/0/accel
+  name=ICM45631 Accelerometer
++/dev/icm45631/0/gyro
+  name=ICM45631 Gyroscope
++/dev/icm45631/0/temp
+  name=ICM45631 Temperature
++/dev/icm45631/0/motion_detect
+  name=ICM45631 Motion Detect
++/dev/icm45631/0/stationary_detect
+  name=ICM45631 Stationary Detect
++/dev/icm45631/0/freefall_detect
+  name=ICM45631 FreeFall Detect
+
+# MAG 1 (MMC5616WA)
++/dev/mmc5616/0/mag
+  name=MMC5616 Magnetometer
